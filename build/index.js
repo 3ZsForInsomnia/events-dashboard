@@ -584,6 +584,7 @@ var SetEventsList = exports.SetEventsList = '[Event Dashboard] Set Events List';
 var AddMoreEvents = exports.AddMoreEvents = '[Event Dashboard] Add More Events';
 var SetCurrentlySelectedEvent = exports.SetCurrentlySelectedEvent = '[Event Dashboard] Set Currently Selected Event';
 var UnsetCurrentlySelectedEvent = exports.UnsetCurrentlySelectedEvent = '[Event Dashboard] Unset Currently Selected Event';
+var IncrementCurrentPage = exports.IncrementCurrentPage = '[Event Dashboard] Increment Current Page';
 
 // SetEventsList and AddMoreActions could be combined, but they are not
 // This optimization is not necessary as there is only ever one list
@@ -619,6 +620,12 @@ var SetCurrentlySelectedEventAction = exports.SetCurrentlySelectedEventAction = 
 var UnsetCurrentlySelectedEventAction = exports.UnsetCurrentlySelectedEventAction = function UnsetCurrentlySelectedEventAction() {
     return {
         type: UnsetCurrentlySelectedEvent
+    };
+};
+
+var IncrementCurrentPageAction = exports.IncrementCurrentPageAction = function IncrementCurrentPageAction() {
+    return {
+        type: IncrementCurrentPage
     };
 };
 
@@ -21734,6 +21741,10 @@ var _eventList = __webpack_require__(73);
 
 var _eventList2 = _interopRequireDefault(_eventList);
 
+var _loadMore = __webpack_require__(91);
+
+var _loadMore2 = _interopRequireDefault(_loadMore);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -21757,7 +21768,8 @@ var App = function (_Component) {
             return _react2.default.createElement(
                 'div',
                 { className: 'App' },
-                _react2.default.createElement(_eventList2.default, null)
+                _react2.default.createElement(_eventList2.default, null),
+                _react2.default.createElement(_loadMore2.default, null)
             );
         }
     }]);
@@ -22407,7 +22419,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 var initialState = {
     currentEvent: null,
     events: [],
-    eventsPage: 1
+    currentPage: 1
 };
 
 var eventDashboard = exports.eventDashboard = function eventDashboard() {
@@ -22430,6 +22442,10 @@ var eventDashboard = exports.eventDashboard = function eventDashboard() {
         case actions.UnsetCurrentlySelectedEvent:
             return Object.assign({}, state, {
                 currentEvent: null
+            });
+        case actions.IncrementCurrentPage:
+            return Object.assign({}, state, {
+                currentPage: state.currentPage + 1
             });
         default:
             return state;
@@ -22474,8 +22490,14 @@ var GetSpecificEventAction = exports.GetSpecificEventAction = function GetSpecif
     */
 
 var GetEventsAction = exports.GetEventsAction = function GetEventsAction(page) {
-    return function (dispatch) {
-        var url = '/events?page=' + page;
+    return function (dispatch, getState) {
+        var url = '/events?page=';
+        if (page) {
+            url += page;
+        } else {
+            url += getState().eventDashboard.currentPage;
+        }
+
         fetch(url).then(function (response) {
             return response.json();
         }).then(function (data) {
@@ -22484,9 +22506,156 @@ var GetEventsAction = exports.GetEventsAction = function GetEventsAction(page) {
             } else {
                 dispatch(atomicActions.AddMoreEventsAction(data.events));
             }
+            // Increment the current page count
+            // This way next time we call this, we get the next set of events
+            dispatch(atomicActions.IncrementCurrentPageAction());
         });
     };
 };
+
+/***/ }),
+/* 91 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _reactRedux = __webpack_require__(12);
+
+var _loadMore = __webpack_require__(92);
+
+var _loadMore2 = _interopRequireDefault(_loadMore);
+
+var _eventDashboard = __webpack_require__(90);
+
+var effects = _interopRequireWildcard(_eventDashboard);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var mapStateToProps = function mapStateToProps(state, ownProps) {
+    return {};
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
+    return {
+        loadMore: function loadMore() {
+            dispatch(effects.GetEventsAction());
+        }
+    };
+};
+
+var LoadMoreContainer = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_loadMore2.default);
+
+exports.default = LoadMoreContainer;
+
+/***/ }),
+/* 92 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.LoadMore = undefined;
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+__webpack_require__(93);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var LoadMore = exports.LoadMore = function LoadMore(props) {
+    return _react2.default.createElement(
+        'div',
+        { className: 'load-more' },
+        _react2.default.createElement(
+            'button',
+            {
+                className: 'load-more__button',
+                onClick: function onClick() {
+                    return props.loadMore();
+                }
+            },
+            'Load More'
+        )
+    );
+};
+
+exports.default = LoadMore;
+
+/***/ }),
+/* 93 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(94);
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(9)(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {
+	module.hot.accept("!!../../../node_modules/css-loader/index.js!./load-more.styles.css", function() {
+		var newContent = require("!!../../../node_modules/css-loader/index.js!./load-more.styles.css");
+
+		if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+
+		var locals = (function(a, b) {
+			var key, idx = 0;
+
+			for(key in a) {
+				if(!b || a[key] !== b[key]) return false;
+				idx++;
+			}
+
+			for(key in b) idx--;
+
+			return idx === 0;
+		}(content.locals, newContent.locals));
+
+		if(!locals) throw new Error('Aborting CSS HMR due to changed css-modules locals.');
+
+		update(newContent);
+	});
+
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 94 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(8)(false);
+// imports
+
+
+// module
+exports.push([module.i, ".load-more {\r\n    text-align: center;\r\n}\r\n\r\n.load-more__button {\r\n    border: 1px solid #5252CA;\r\n    border-radius: 5px;\r\n    padding: 6px 20px;\r\n    background-color: white;\r\n    cursor: pointer;\r\n}\r\n", ""]);
+
+// exports
+
 
 /***/ })
 /******/ ]);

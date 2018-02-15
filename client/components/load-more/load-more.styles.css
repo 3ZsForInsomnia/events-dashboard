@@ -1,0 +1,11 @@
+.load-more {
+    text-align: center;
+}
+
+.load-more__button {
+    border: 1px solid #5252CA;
+    border-radius: 5px;
+    padding: 6px 20px;
+    background-color: white;
+    cursor: pointer;
+}

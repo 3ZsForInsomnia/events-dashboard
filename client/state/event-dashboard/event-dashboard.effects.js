@@ -19,8 +19,14 @@ export const GetSpecificEventAction = (eventId) => (dispatch) => {
         })
 }
 
-export const GetEventsAction = (page) => (dispatch) => {
-    const url = '/events?page=' + page;
+export const GetEventsAction = (page) => (dispatch, getState) => {
+    let url = '/events?page=';
+    if (page) {
+        url += page;
+    } else {
+        url += getState().eventDashboard.currentPage
+    }
+
     fetch(url)
         .then(response => response.json())
         .then(data => {
@@ -29,5 +35,8 @@ export const GetEventsAction = (page) => (dispatch) => {
             } else {
                 dispatch(atomicActions.AddMoreEventsAction(data.events));
             }
+            // Increment the current page count
+            // This way next time we call this, we get the next set of events
+            dispatch(atomicActions.IncrementCurrentPageAction());
         });
 }

@@ -12,6 +12,7 @@ export const SetEventsList = '[Event Dashboard] Set Events List';
 export const AddMoreEvents = '[Event Dashboard] Add More Events';
 export const SetCurrentlySelectedEvent = '[Event Dashboard] Set Currently Selected Event';
 export const UnsetCurrentlySelectedEvent = '[Event Dashboard] Unset Currently Selected Event';
+export const IncrementCurrentPage = '[Event Dashboard] Increment Current Page';
 
 // SetEventsList and AddMoreActions could be combined, but they are not
 // This optimization is not necessary as there is only ever one list
@@ -50,3 +51,8 @@ export const UnsetCurrentlySelectedEventAction = () => {
     }
 }
 
+export const IncrementCurrentPageAction = () => {
+    return {
+        type: IncrementCurrentPage
+    }
+}

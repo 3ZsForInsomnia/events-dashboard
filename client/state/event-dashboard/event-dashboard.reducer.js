@@ -3,7 +3,7 @@ import * as actions from './event-dashboard.actions';
 const initialState = {
     currentEvent: null,
     events: [],
-    eventsPage: 1,
+    currentPage: 1,
 }
 
 export const eventDashboard = (state = initialState, action) => {
@@ -23,6 +23,10 @@ export const eventDashboard = (state = initialState, action) => {
         case actions.UnsetCurrentlySelectedEvent:
             return Object.assign({}, state, {
                 currentEvent: null
+            });
+        case actions.IncrementCurrentPage:
+            return Object.assign({}, state, {
+                currentPage: state.currentPage + 1
             });
         default:
             return state
