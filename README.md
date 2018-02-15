@@ -1,50 +1,29 @@
-# Splash Front-end Challenge
+# Events Dashboard #
 
-Hello developer,
+This app displays a set of events pulled from static data, using React and Redux as the primary libraries used, and is built using yarn. To run, simply pull down the code, and run ```yarn install``` and ```yarn start```.
 
-Great news! You're going to totally rebuild the Splash event dashboard. It's too old, like a crippled dinosaur. Captain Murdock, the product manager for this project, has appointed you as the most excellent developer to start this endeavor from scratch. Congrats!
+The React part of the app is built using Webpack, exporting to /build/index.js.
 
-Thankfully B.A., the best back-end developer, has already set up some endpoints for you.
+## About the app ##
 
-## Requirements
+This app is mostly responsive, but does so using the "fr" unit for CSS Grid, and the vw and vh CSS units in most other places.
 
-* Implement a UI that renders the returned events inside the dashboard. Note that the endpoint returns paginated results.
-* Upon clicking on an event, a modal should open that shows more event details.
-* Bonus: add a [Mapbox.js](https://www.mapbox.com/) map inside the modal showing the event's location.
+As mentioned, this app makes extensive use of React and Redux. In particular it uses the Redux-suggested approach of containers that wrap components, where the container provides the data and dispatching functions for the component.
 
-## Set-up Instructions
+### How I used Redux here (and use it in general) ###
 
-* We recommend using [yarn](https://yarnpkg.com/en/), an improved version of npm for front-end dependency management.
-* Install dependencies executing `yarn install`
-* Kick off the local server executing `yarn run start`
+The actions used are divided up in a way that is more inspired by NgRx, the Redux-inspired state management library for Angular 2+. This is largely the same, however the way the action types are defined is somewhat different as it includes a namespace of sorts. It also means that there is a mental-model difference in that there is a separate concept of "effects", which are actions that cause externally-sourced changes to the "state machine" that is the store.
 
-## Endpoints Available
+While not present here due to the simplicity of the app, I also separate actions out further typically, having both effects and "atomic" actions, as well as "non-atomic" actions. I generally define an "atomic" action as one that causes a single property of the relevant reducer to change, and "non-atomic" actions as actions that dispatch other actions. These non-atomic actions could dispatch a set of actions, or conditonally dispatch an action.
 
-* GET `/events?page=[pageNumber]`. Returns a list of events.
-* GET `/events/[id]`. Returns event data with more details, like sessions and a description.
+While this sounds strict and possibly verbose, I find that it allows me to functionally compose actions in extremely simple ways, as well as greatly simplifying my reducers.
 
-## Implementation Notes
+### Components ###
 
-* Use `#root-container` as the container for your JS app.
-* The files `build/index.js` and `build/index.css` are loaded in the layout. You can create them directly or make your code compilation process output to those paths.
-* You can choose to use any framework, task runner, CSS preprocessor and libraries that you'd like. Product manager Captain Murdock trusts you fully to make the right decisions!
-* This project shouldn't take more than a few hours. Making sacrifices to stay within the time frame is okay as long as you can explain the decisions. The goal is for you to implement a beautiful solution that can be reviewed and discussed with the team. Gotta show all of them how amazing you are.
-* Use the [provided designs](designs) for guidance.
+For the most part, components in this app are pretty straightforward. In some cases I have larger components when there is not much logic within a given section of the code. However whenever any DOM manipulation is happening within the component's JSX, I tend to create a small component to abstract that out. An example of this is visible in the SelectedEvent component group, with Sessions and VenueInfo being separate components.
 
-## Goal
+### Mobile friendliness ###
 
-The goal of this challenge is to discuss your implementation with you in your next interview. We'll pay special attention to:
+The CSS grid displays up to three columns in the largest view, and shrinks to two, then one column as the viewport shrinks in width. Also, the events themselves are displayed according to the width available, and so take up the available size.
 
-1. Well thought out architecture.
-2. Code readability.
-3. Code that can be easily unit tested.
-4. Alignment with provided designs.
-5. Error handling.
-6. Mobile friendly UI.
-
-## How to submit?
-
-1. Fork this repo. It will stay private in your account.
-2. When you are done implementing, go to Settings > Collaborators & Teams and add as a collaborator with admin access the Splash developer that gave you the code test. Some of us: @gpuenteallott, @daniellealexis, @MitulP91, @johnnybenson.
-
-We're looking forward to your submission! 🚀
+Further, the modal displayed when a particular event is selected is based on the CSS units of vw and vh, and also uses media queries to take up more or less space based on the same breakpoints that the column count uses. As such, it will take up more of the screen real estate in smaller views, to help ensure that its contents are reasonably viewable as the viewport changes size.
