@@ -36,11 +36,11 @@ export const AddMoreEventsAction = (events) => {
     }
 }
 
-export const SetCurrentlySelectedEventAction = (eventId) => {
+export const SetCurrentlySelectedEventAction = (event) => {
     return {
         type: SetCurrentlySelectedEvent,
         payload: {
-            eventId
+            event
         }
     }
 }

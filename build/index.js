@@ -608,11 +608,11 @@ var AddMoreEventsAction = exports.AddMoreEventsAction = function AddMoreEventsAc
     };
 };
 
-var SetCurrentlySelectedEventAction = exports.SetCurrentlySelectedEventAction = function SetCurrentlySelectedEventAction(eventId) {
+var SetCurrentlySelectedEventAction = exports.SetCurrentlySelectedEventAction = function SetCurrentlySelectedEventAction(event) {
     return {
         type: SetCurrentlySelectedEvent,
         payload: {
-            eventId: eventId
+            event: event
         }
     };
 };
@@ -21737,6 +21737,8 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
+__webpack_require__(164);
+
 var _eventList = __webpack_require__(73);
 
 var _eventList2 = _interopRequireDefault(_eventList);
@@ -21744,6 +21746,10 @@ var _eventList2 = _interopRequireDefault(_eventList);
 var _loadMore = __webpack_require__(91);
 
 var _loadMore2 = _interopRequireDefault(_loadMore);
+
+var _modal = __webpack_require__(166);
+
+var _modal2 = _interopRequireDefault(_modal);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -21769,7 +21775,8 @@ var App = function (_Component) {
                 'div',
                 { className: 'App' },
                 _react2.default.createElement(_eventList2.default, null),
-                _react2.default.createElement(_loadMore2.default, null)
+                _react2.default.createElement(_loadMore2.default, null),
+                _react2.default.createElement(_modal2.default, null)
             );
         }
     }]);
@@ -21917,7 +21924,7 @@ exports = module.exports = __webpack_require__(8)(false);
 
 
 // module
-exports.push([module.i, ".event-list {\r\n    margin: 30px;\r\n    display: grid;\r\n    grid-template-columns: 1fr 1fr 1fr;\r\n    grid-gap: 40px;\r\n}\r\n", ""]);
+exports.push([module.i, ".event-list {\r\n    margin: 30px 60px;\r\n    display: grid;\r\n    grid-template-columns: 1fr 1fr 1fr;\r\n    grid-gap: 60px;\r\n}\r\n", ""]);
 
 // exports
 
@@ -22034,6 +22041,8 @@ var _eventDashboard = __webpack_require__(7);
 
 var actions = _interopRequireWildcard(_eventDashboard);
 
+var _eventDashboard2 = __webpack_require__(90);
+
 var _event = __webpack_require__(79);
 
 var _event2 = _interopRequireDefault(_event);
@@ -22049,7 +22058,7 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
 var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
     return {
         selectAnEvent: function selectAnEvent(eventId) {
-            dispatch(actions.SetCurrentlySelectedEventAction(eventId));
+            dispatch((0, _eventDashboard2.GetSpecificEventAction)(eventId));
         }
     };
 };
@@ -22417,7 +22426,7 @@ var actions = _interopRequireWildcard(_eventDashboard);
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 var initialState = {
-    currentEvent: null,
+    selectedEvent: null,
     events: [],
     currentPage: 1
 };
@@ -22437,11 +22446,11 @@ var eventDashboard = exports.eventDashboard = function eventDashboard() {
             });
         case actions.SetCurrentlySelectedEvent:
             return Object.assign({}, state, {
-                currentEvent: action.payload.eventId
+                selectedEvent: action.payload.event
             });
         case actions.UnsetCurrentlySelectedEvent:
             return Object.assign({}, state, {
-                currentEvent: null
+                selectedEvent: null
             });
         case actions.IncrementCurrentPage:
             return Object.assign({}, state, {
@@ -22476,7 +22485,7 @@ var GetSpecificEventAction = exports.GetSpecificEventAction = function GetSpecif
         fetch(url).then(function (response) {
             return response.json();
         }).then(function (data) {
-            dispatch(atomicActions.SetCurrentlySelectedEventAction(data));
+            dispatch(atomicActions.SetCurrentlySelectedEventAction(data.event));
         });
     };
 }; /*
@@ -22652,10 +22661,529 @@ exports = module.exports = __webpack_require__(8)(false);
 
 
 // module
-exports.push([module.i, ".load-more {\r\n    text-align: center;\r\n}\r\n\r\n.load-more__button {\r\n    border: 1px solid #5252CA;\r\n    border-radius: 5px;\r\n    padding: 6px 20px;\r\n    background-color: white;\r\n    cursor: pointer;\r\n}\r\n", ""]);
+exports.push([module.i, ".load-more {\r\n    text-align: center;\r\n}\r\n\r\n.load-more__button {\r\n    border: 2px solid #5252ca;\r\n    border-radius: 5px;\r\n    padding: 6px 20px;\r\n    background-color: white;\r\n    cursor: pointer;\r\n}\r\n", ""]);
 
 // exports
 
+
+/***/ }),
+/* 95 */,
+/* 96 */,
+/* 97 */,
+/* 98 */,
+/* 99 */,
+/* 100 */,
+/* 101 */,
+/* 102 */,
+/* 103 */,
+/* 104 */,
+/* 105 */,
+/* 106 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _reactRedux = __webpack_require__(12);
+
+var _selectedEvent = __webpack_require__(107);
+
+var _selectedEvent2 = _interopRequireDefault(_selectedEvent);
+
+var _eventDashboard = __webpack_require__(7);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var mapStateToProps = function mapStateToProps(state, ownProps) {
+    return {
+        event: state.eventDashboard.selectedEvent
+    };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
+    return {
+        deselectCurrentEvent: function deselectCurrentEvent() {
+            dispatch((0, _eventDashboard.UnsetCurrentlySelectedEventAction)());
+        }
+    };
+};
+
+var SelectedEventContainer = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_selectedEvent2.default);
+
+exports.default = SelectedEventContainer;
+
+/***/ }),
+/* 107 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.SelectedEvent = undefined;
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+__webpack_require__(108);
+
+var _dateUtility = __webpack_require__(86);
+
+var _session = __webpack_require__(168);
+
+var _session2 = _interopRequireDefault(_session);
+
+var _venueInfo = __webpack_require__(169);
+
+var _venueInfo2 = _interopRequireDefault(_venueInfo);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var SelectedEvent = exports.SelectedEvent = function SelectedEvent(props) {
+    var date = new Date(props.event.event_start);
+    var dayOfMonth = date.getDate();
+    var month = _dateUtility.months[date.getMonth()];
+    var year = date.getFullYear();
+    var eventDate = month + ' ' + dayOfMonth + ', ' + year;
+    var eventStart = date.toLocaleTimeString('en-US');
+    var eventEnd = new Date(props.event.event_end).toLocaleTimeString('en-US');
+    var venue = props.event.venue;
+
+    return _react2.default.createElement(
+        'div',
+        { className: 'selected-event' },
+        _react2.default.createElement(
+            'div',
+            { className: 'selected-event__title' },
+            _react2.default.createElement(
+                'h3',
+                null,
+                'Fuck off: ',
+                props.event.title
+            ),
+            _react2.default.createElement(
+                'button',
+                {
+                    className: 'selected-event__deselect',
+                    onClick: function onClick() {
+                        return props.deselectCurrentEvent();
+                    }
+                },
+                _react2.default.createElement(
+                    'i',
+                    { className: 'material-icons' },
+                    '\uE5CD'
+                )
+            )
+        ),
+        _react2.default.createElement(
+            'div',
+            { className: 'selected-event__info' },
+            _react2.default.createElement(
+                'div',
+                { className: 'selected-event__details' },
+                _react2.default.createElement(
+                    'h3',
+                    null,
+                    'Event Details'
+                ),
+                _react2.default.createElement(
+                    'h5',
+                    null,
+                    'Date & Time'
+                ),
+                _react2.default.createElement(
+                    'p',
+                    null,
+                    eventDate
+                ),
+                _react2.default.createElement(
+                    'p',
+                    null,
+                    eventStart,
+                    ' - ',
+                    eventEnd
+                ),
+                venue ? _react2.default.createElement(_venueInfo2.default, { venue: venue }) : ""
+            ),
+            props.event.description ? _react2.default.createElement(
+                'div',
+                { className: 'selected-event__description' },
+                _react2.default.createElement(
+                    'h3',
+                    null,
+                    'Description'
+                ),
+                _react2.default.createElement(
+                    'p',
+                    null,
+                    props.event.description
+                )
+            ) : "",
+            props.event.sessions ? _react2.default.createElement(
+                'div',
+                { className: 'selected-event__sessions' },
+                _react2.default.createElement(
+                    'h3',
+                    null,
+                    'Sessions (',
+                    props.event.sessions.length,
+                    ')'
+                ),
+                props.event.sessions.map(function (session) {
+                    return _react2.default.createElement(_session2.default, { key: session.id, session: session });
+                })
+            ) : ""
+        )
+    );
+};
+
+exports.default = SelectedEvent;
+
+/***/ }),
+/* 108 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(109);
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(9)(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {
+	module.hot.accept("!!../../../node_modules/css-loader/index.js!./selected-event.styles.css", function() {
+		var newContent = require("!!../../../node_modules/css-loader/index.js!./selected-event.styles.css");
+
+		if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+
+		var locals = (function(a, b) {
+			var key, idx = 0;
+
+			for(key in a) {
+				if(!b || a[key] !== b[key]) return false;
+				idx++;
+			}
+
+			for(key in b) idx--;
+
+			return idx === 0;
+		}(content.locals, newContent.locals));
+
+		if(!locals) throw new Error('Aborting CSS HMR due to changed css-modules locals.');
+
+		update(newContent);
+	});
+
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 109 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(8)(false);
+// imports
+
+
+// module
+exports.push([module.i, ".selected-event {\r\n    position: fixed;\r\n    left: 30%;\r\n    top: 8%;\r\n    margin: auto;\r\n    width: 40vw;\r\n    height: 85vh;\r\n    border: 1px solid #ececec;\r\n    border-radius: 5px;\r\n    z-index: 1;\r\n    background-color: #fff;\r\n}\r\n\r\n.selected-event__title {\r\n    text-align: center;\r\n    border-bottom: 1px solid #ececec;\r\n}\r\n\r\n.selected-event__title > h3 {\r\n    margin: 8px 0;\r\n}\r\n\r\n.selected-event__deselect {\r\n    cursor: pointer;\r\n    float: right;\r\n    margin-top: -30px;\r\n    border: none;\r\n    background-color: #fff;\r\n}\r\n\r\n.selected-event__info {\r\n    margin: 0 30px;\r\n}\r\n\r\n.session {\r\n    display: flex;\r\n    flex-direction: row;\r\n    justify-content: space-between;\r\n    margin: 6px 0;\r\n}\r\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 110 */,
+/* 111 */,
+/* 112 */,
+/* 113 */,
+/* 114 */,
+/* 115 */,
+/* 116 */,
+/* 117 */,
+/* 118 */,
+/* 119 */,
+/* 120 */,
+/* 121 */,
+/* 122 */,
+/* 123 */,
+/* 124 */,
+/* 125 */,
+/* 126 */,
+/* 127 */,
+/* 128 */,
+/* 129 */,
+/* 130 */,
+/* 131 */,
+/* 132 */,
+/* 133 */,
+/* 134 */,
+/* 135 */,
+/* 136 */,
+/* 137 */,
+/* 138 */,
+/* 139 */,
+/* 140 */,
+/* 141 */,
+/* 142 */,
+/* 143 */,
+/* 144 */,
+/* 145 */,
+/* 146 */,
+/* 147 */,
+/* 148 */,
+/* 149 */,
+/* 150 */,
+/* 151 */,
+/* 152 */,
+/* 153 */,
+/* 154 */,
+/* 155 */,
+/* 156 */,
+/* 157 */,
+/* 158 */,
+/* 159 */,
+/* 160 */,
+/* 161 */,
+/* 162 */,
+/* 163 */,
+/* 164 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(165);
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(9)(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {
+	module.hot.accept("!!../node_modules/css-loader/index.js!./App.styles.css", function() {
+		var newContent = require("!!../node_modules/css-loader/index.js!./App.styles.css");
+
+		if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+
+		var locals = (function(a, b) {
+			var key, idx = 0;
+
+			for(key in a) {
+				if(!b || a[key] !== b[key]) return false;
+				idx++;
+			}
+
+			for(key in b) idx--;
+
+			return idx === 0;
+		}(content.locals, newContent.locals));
+
+		if(!locals) throw new Error('Aborting CSS HMR due to changed css-modules locals.');
+
+		update(newContent);
+	});
+
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 165 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(8)(false);
+// imports
+
+
+// module
+exports.push([module.i, ".App {\r\n    margin-bottom: 20px;\r\n}\r\n\r\n.App--modal-open {\r\n    position: fixed;\r\n    top: 0;\r\n    bottom: 0;\r\n    left: 0;\r\n    right: 0;\r\n    background-color: #2b1f2f;\r\n}\r\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 166 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _reactRedux = __webpack_require__(12);
+
+var _modal = __webpack_require__(167);
+
+var _modal2 = _interopRequireDefault(_modal);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var mapStateToProps = function mapStateToProps(state) {
+    return {
+        selectedEvent: state.eventDashboard.selectedEvent
+    };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
+    return {};
+};
+
+var ModalContainer = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_modal2.default);
+
+exports.default = ModalContainer;
+
+/***/ }),
+/* 167 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.Modal = undefined;
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _selectedEvent = __webpack_require__(106);
+
+var _selectedEvent2 = _interopRequireDefault(_selectedEvent);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Modal = exports.Modal = function Modal(props) {
+    return _react2.default.createElement(
+        'div',
+        null,
+        props.selectedEvent ? _react2.default.createElement(_selectedEvent2.default, null) : ""
+    );
+};
+
+exports.default = Modal;
+
+/***/ }),
+/* 168 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Session = function Session(props) {
+    var sessionStart = new Date(props.session.event_start).toLocaleTimeString('en-US');
+    var sessionEnd = new Date(props.session.event_end).toLocaleTimeString('en-US');
+    return _react2.default.createElement(
+        'div',
+        { className: 'session' },
+        _react2.default.createElement(
+            'span',
+            { className: 'session__title' },
+            props.session.title
+        ),
+        _react2.default.createElement(
+            'span',
+            { className: 'session__time' },
+            sessionStart,
+            ' - ',
+            sessionEnd
+        )
+    );
+};
+
+exports.default = Session;
+
+/***/ }),
+/* 169 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.VenueInfo = undefined;
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var VenueInfo = exports.VenueInfo = function VenueInfo(props) {
+    return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+            'h5',
+            null,
+            'Location'
+        ),
+        _react2.default.createElement(
+            'p',
+            null,
+            props.venue.name
+        ),
+        _react2.default.createElement(
+            'p',
+            null,
+            props.venue.address
+        ),
+        _react2.default.createElement(
+            'p',
+            null,
+            props.venue.city,
+            ', ',
+            props.venue.region,
+            ' ',
+            props.venue.postalCode
+        )
+    );
+};
+
+exports.default = VenueInfo;
 
 /***/ })
 /******/ ]);

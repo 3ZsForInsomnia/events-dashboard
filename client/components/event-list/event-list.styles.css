@@ -1,6 +1,6 @@
 .event-list {
-    margin: 30px;
+    margin: 30px 60px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-gap: 40px;
+    grid-gap: 60px;
 }

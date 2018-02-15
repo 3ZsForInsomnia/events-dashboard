@@ -1,5 +1,6 @@
 import { connect} from 'react-redux';
 import * as actions from './../state/event-dashboard/event-dashboard.actions';
+import { GetSpecificEventAction } from './../state/event-dashboard/event-dashboard.effects';
 import Event from './../components/event/event.component';
 
 const mapStateToProps = (state, ownProps) => {
@@ -9,7 +10,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         selectAnEvent: eventId => {
-            dispatch(actions.SetCurrentlySelectedEventAction(eventId));
+            dispatch(GetSpecificEventAction(eventId));
         }
     }
 }

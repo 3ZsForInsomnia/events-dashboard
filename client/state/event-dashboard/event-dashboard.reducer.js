@@ -1,7 +1,7 @@
 import * as actions from './event-dashboard.actions';
 
 const initialState = {
-    currentEvent: null,
+    selectedEvent: null,
     events: [],
     currentPage: 1,
 }
@@ -18,11 +18,11 @@ export const eventDashboard = (state = initialState, action) => {
             });
         case actions.SetCurrentlySelectedEvent:
             return Object.assign({}, state, {
-                currentEvent: action.payload.eventId
+                selectedEvent: action.payload.event
             });
         case actions.UnsetCurrentlySelectedEvent:
             return Object.assign({}, state, {
-                currentEvent: null
+                selectedEvent: null
             });
         case actions.IncrementCurrentPage:
             return Object.assign({}, state, {

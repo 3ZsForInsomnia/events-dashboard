@@ -1,0 +1,40 @@
+.selected-event {
+    position: fixed;
+    left: 30%;
+    top: 8%;
+    margin: auto;
+    width: 40vw;
+    height: 85vh;
+    border: 1px solid #ececec;
+    border-radius: 5px;
+    z-index: 1;
+    background-color: #fff;
+}
+
+.selected-event__title {
+    text-align: center;
+    border-bottom: 1px solid #ececec;
+}
+
+.selected-event__title > h3 {
+    margin: 8px 0;
+}
+
+.selected-event__deselect {
+    cursor: pointer;
+    float: right;
+    margin-top: -30px;
+    border: none;
+    background-color: #fff;
+}
+
+.selected-event__info {
+    margin: 0 30px;
+}
+
+.session {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 6px 0;
+}
