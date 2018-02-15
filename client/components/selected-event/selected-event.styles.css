@@ -1,14 +1,34 @@
 .selected-event {
     position: fixed;
-    left: 30%;
     top: 8%;
     margin: auto;
-    width: 40vw;
     height: 85vh;
+    overflow-y: scroll;
     border: 1px solid #ececec;
     border-radius: 5px;
     z-index: 1;
     background-color: #fff;
+}
+
+@media screen and (max-width: 767px) {
+    .selected-event {
+        width: 80vw;
+        left: 10%;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1223px) {
+    .selected-event {
+        width: 60vw;
+        left: 20%;
+    }
+}
+
+@media screen and (min-width: 1224px) {
+    .selected-event {
+        width: 40vw;
+        left: 30%;
+    }
 }
 
 .selected-event__title {

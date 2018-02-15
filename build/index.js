@@ -21924,7 +21924,7 @@ exports = module.exports = __webpack_require__(8)(false);
 
 
 // module
-exports.push([module.i, ".event-list {\r\n    margin: 30px 60px;\r\n    display: grid;\r\n    grid-template-columns: 1fr 1fr 1fr;\r\n    grid-gap: 60px;\r\n}\r\n", ""]);
+exports.push([module.i, ".event-list {\r\n    margin: 30px 60px;\r\n    display: grid;\r\n    grid-gap: 60px;\r\n}\r\n\r\n@media screen and (max-width: 767px) {\r\n    .event-list {\r\n        grid-template-columns: 1fr;\r\n    }\r\n}\r\n\r\n@media screen and (min-width: 768px) and (max-width: 1223px) {\r\n    .event-list {\r\n        grid-template-columns: 1fr 1fr;\r\n    }\r\n}\r\n\r\n@media screen and (min-width: 1224px) {\r\n    .event-list {\r\n        grid-template-columns: 1fr 1fr 1fr;\r\n    }\r\n}\r\n", ""]);
 
 // exports
 
@@ -22170,7 +22170,7 @@ exports = module.exports = __webpack_require__(8)(false);
 
 
 // module
-exports.push([module.i, ".event {\r\n    border: 1px solid grey;\r\n    border-radius: 5px;\r\n    padding: 2px;\r\n    width: 100%;\r\n    height: 65vh;\r\n    text-align: center;\r\n    display: flex;\r\n    flex-direction: column;\r\n    justify-content: space-between;\r\n}\r\n", ""]);
+exports.push([module.i, ".event {\r\n    border: 1px solid grey;\r\n    border-radius: 5px;\r\n    padding: 2px;\r\n    width: 100%;\r\n    height: 55vh;\r\n    text-align: center;\r\n    display: flex;\r\n    flex-direction: column;\r\n    justify-content: space-between;\r\n}\r\n", ""]);
 
 // exports
 
@@ -22906,7 +22906,7 @@ exports = module.exports = __webpack_require__(8)(false);
 
 
 // module
-exports.push([module.i, ".selected-event {\r\n    position: fixed;\r\n    left: 30%;\r\n    top: 8%;\r\n    margin: auto;\r\n    width: 40vw;\r\n    height: 85vh;\r\n    border: 1px solid #ececec;\r\n    border-radius: 5px;\r\n    z-index: 1;\r\n    background-color: #fff;\r\n}\r\n\r\n.selected-event__title {\r\n    text-align: center;\r\n    border-bottom: 1px solid #ececec;\r\n}\r\n\r\n.selected-event__title > h3 {\r\n    margin: 8px 0;\r\n}\r\n\r\n.selected-event__deselect {\r\n    cursor: pointer;\r\n    float: right;\r\n    margin-top: -30px;\r\n    border: none;\r\n    background-color: #fff;\r\n}\r\n\r\n.selected-event__info {\r\n    margin: 0 30px;\r\n}\r\n\r\n.session {\r\n    display: flex;\r\n    flex-direction: row;\r\n    justify-content: space-between;\r\n    margin: 6px 0;\r\n}\r\n", ""]);
+exports.push([module.i, ".selected-event {\r\n    position: fixed;\r\n    top: 8%;\r\n    margin: auto;\r\n    height: 85vh;\r\n    overflow-y: scroll;\r\n    border: 1px solid #ececec;\r\n    border-radius: 5px;\r\n    z-index: 1;\r\n    background-color: #fff;\r\n}\r\n\r\n@media screen and (max-width: 767px) {\r\n    .selected-event {\r\n        width: 80vw;\r\n        left: 10%;\r\n    }\r\n}\r\n\r\n@media screen and (min-width: 768px) and (max-width: 1223px) {\r\n    .selected-event {\r\n        width: 60vw;\r\n        left: 20%;\r\n    }\r\n}\r\n\r\n@media screen and (min-width: 1224px) {\r\n    .selected-event {\r\n        width: 40vw;\r\n        left: 30%;\r\n    }\r\n}\r\n\r\n.selected-event__title {\r\n    text-align: center;\r\n    border-bottom: 1px solid #ececec;\r\n}\r\n\r\n.selected-event__title > h3 {\r\n    margin: 8px 0;\r\n}\r\n\r\n.selected-event__deselect {\r\n    cursor: pointer;\r\n    float: right;\r\n    margin-top: -30px;\r\n    border: none;\r\n    background-color: #fff;\r\n}\r\n\r\n.selected-event__info {\r\n    margin: 0 30px;\r\n}\r\n\r\n.session {\r\n    display: flex;\r\n    flex-direction: row;\r\n    justify-content: space-between;\r\n    margin: 6px 0;\r\n}\r\n", ""]);
 
 // exports
 

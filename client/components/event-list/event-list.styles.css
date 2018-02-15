@@ -1,6 +1,23 @@
 .event-list {
     margin: 30px 60px;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 60px;
+}
+
+@media screen and (max-width: 767px) {
+    .event-list {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1223px) {
+    .event-list {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media screen and (min-width: 1224px) {
+    .event-list {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
 }
