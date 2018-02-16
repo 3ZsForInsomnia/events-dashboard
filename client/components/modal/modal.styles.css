@@ -1,0 +1,16 @@
+.modal-is-open {
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    position: absolute;
+    background-color: #2b1f2fc8;
+    /* c8 as the opacity was chosen for a specific reason
+     * The color the sketch file provided for the semi-transparent
+     * background while the modal is open is #2b1f2f, or 9201305 in decimal.
+     * All black, or 100% opaque, would be #ffffff, or 16777215.
+     * I divided 9201305 by 16777215 to get 0.548, rounded up to 0.55,
+     * and converted 55 to hex, getting 0x37. I then subtracted 0x37 from 0xff
+     * to get 0xc8.
+     */
+}

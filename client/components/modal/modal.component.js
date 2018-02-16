@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { Component } from 'react';
+import './modal.styles.css';
 import SelectedEvent from './../../containers/selected-event.container';
 
 export const Modal = (props) => {
     return(
         <div>
             { (props.selectedEvent)
-                ? <SelectedEvent />
+                ? <div className='modal-is-open'>
+                    <SelectedEvent />
+                </div>
                 : ""
             }
         </div>
