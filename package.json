@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "author": "Splash <dev@splashthat.com>",
   "scripts": {
-    "start": "webpack --watch && node server/index.js",
-    "build": "webpack"
+    "start": "node server/index.js",
+    "build": "webpack",
+    "dev": "webpack --watch"
   },
   "dependencies": {
     "html-webpack-plugin": "^2.30.1",

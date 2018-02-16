@@ -1,6 +1,6 @@
 # Events Dashboard #
 
-This app displays a set of events pulled from static data, using React and Redux as the primary libraries used, and is built using yarn. To run, simply pull down the code, and run ```yarn install``` and ```yarn start```.
+This app displays a set of events pulled from static data, using React and Redux as the primary libraries used, and is built using yarn. To run, simply pull down the code, and run ```yarn install```, ```yarn build``` to simply build or ```yarn dev``` to rebuild on change, and lastly ```yarn start``` to run the server.
 
 The React part of the app is built using Webpack, exporting to /build/index.js.
 
